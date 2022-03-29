@@ -118,7 +118,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+#настройки для картинок
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (BASE_DIR/'static',)
 
@@ -126,3 +126,7 @@ STATICFILES_DIRS = (BASE_DIR/'static',)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#настройки для медиа
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
