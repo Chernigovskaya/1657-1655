@@ -2,11 +2,12 @@ import json
 
 from django.shortcuts import render
 import os
+from mainapp.models import ProductCategories, Product
+
 MODULE_DIR = os.path.dirname(__file__)
 
 
 def index(request):
-
     content = {
         'title': 'Geekshop'
     }
@@ -14,7 +15,6 @@ def index(request):
 
 
 def products(request):
-
     goods = [
       {
         'name': 'Худи черного цвета с монограммами adidas Originals',
@@ -64,8 +64,8 @@ def products(request):
 
     content = {
         'title': 'Geekshop - Каталог',
-        'categories': categories,
-        'products': goods,
+        'categories': ProductCategories.objects.all(),
+        'products': Product.objects.all()
     }
     return render(request, 'mainapp/products.html', content)
 
