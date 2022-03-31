@@ -15,7 +15,8 @@ def index(request):
 
 
 def products(request):
-    goods = [
+
+    '''goods = [
       {
         'name': 'Худи черного цвета с монограммами adidas Originals',
         'price': 6090,
@@ -60,7 +61,7 @@ def products(request):
         {'name': 'Обувь'},
         {'name': 'Аксессуары'},
         {'name': 'Подарки'}
-    ]
+    ]'''
 
     content = {
         'title': 'Geekshop - Каталог',
