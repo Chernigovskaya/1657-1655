@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -19,10 +19,10 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-            else:
-                print('не актив')
-        else:
-            print(form.errors)
+        #     else:
+        #         print('не актив')
+        # else:
+        #     print(form.errors)
     else:
         form = UserLoginForm()
 
@@ -33,12 +33,13 @@ def login(request):
     return render(request, 'authapp/login.html', context)
 
 
-def register(request):
+def register(request, massage=None):
 
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
         else:
             print(form.errors)
