@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'mainapp',
     'authapp',
+    'basketapp',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 AUTH_USER_MODEL = 'authapp.User'
+
+LOGIN_URL = '/authapp/login/'
+LOGIN_REDIRECT_URL = '/'

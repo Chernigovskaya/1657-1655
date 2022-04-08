@@ -1,8 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, \
     UserChangeForm
+from django.core.exceptions import ValidationError
 
 from authapp.models import User
+
 
 
 class UserLoginForm(AuthenticationForm):
@@ -15,8 +17,15 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
+        self.fields['username'].required = True
         for filed_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        if not data.isalpha():
+            raise ValidationError('Имя пользователя не может содержать цифры')
+        return data
 
 
 class UserRegisterForm(UserCreationForm):
