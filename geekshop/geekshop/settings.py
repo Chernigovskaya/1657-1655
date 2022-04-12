@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mainapp',
+    'authapp',
+    'basketapp',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -118,7 +121,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+#настройки для картинок
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (BASE_DIR/'static',)
 
@@ -126,3 +129,13 @@ STATICFILES_DIRS = (BASE_DIR/'static',)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#настройки для медиа
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+AUTH_USER_MODEL = 'authapp.User'
+
+LOGIN_URL = '/authapp/login/'
+LOGIN_REDIRECT_URL = '/'
