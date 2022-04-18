@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from authapp.models import User
 
 
-
 class UserLoginForm(AuthenticationForm):
 
     class Meta:
