@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import models
 
 from authapp.models import User
-from mainapp.models import Product
+from mainapp.models import Product, ProductCategories
 
 
 class UserAdminRegisterForm(UserCreationForm):
@@ -44,6 +44,7 @@ class UserAdminProfileForm(UserChangeForm):
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
 
 
+# product
 class AdminProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -70,4 +71,30 @@ class AdminProductUpdateForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control py-4'
 
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
+
+
+# category
+class AdminCategoryForm(forms.ModelForm):
+    class Meta:
+        model = ProductCategories
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(AdminCategoryForm, self).__init__(*args, **kwargs)
+
+        for filed_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'
+
+
+class AdminCategoryUpdateForm(forms.ModelForm):
+    class Meta:
+        model = ProductCategories
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(AdminCategoryUpdateForm, self).__init__(*args, **kwargs)
+
+        for filed_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'
+
 
