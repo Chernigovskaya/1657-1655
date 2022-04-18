@@ -83,8 +83,11 @@ def admin_products(request):
 def admin_product_create(request):
     if request.method == 'POST':
         form = AdminProductForm(data=request.POST, files=request.FILES)
-        form.save()
-        return HttpResponseRedirect(reverse('adminapp:admin_products'))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:admin_products'))
+        else:
+            print(form.errors)
 
     else:
         form = AdminProductForm()
@@ -101,8 +104,11 @@ def admin_product_update(request, id):
     if request.method == 'POST':
         form = AdminProductUpdateForm(data=request.POST, instance=product_select,
                                           files=request.FILES)
-        form.save()
-        return HttpResponseRedirect(reverse('adminapp:admin_products'))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:admin_products'))
+        else:
+            print(form.errors)
     else:
         form = AdminProductUpdateForm(instance=product_select)
     context = {
@@ -135,9 +141,11 @@ def admin_categories(request):
 def admin_category_create(request):
     if request.method == 'POST':
         form = AdminCategoryForm(data=request.POST, files=request.FILES)
-        form.save()
-        return HttpResponseRedirect(reverse('adminapp:admin_categories'))
-
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:admin_categories'))
+        else:
+            print(form.errors)
     else:
         form = AdminCategoryForm()
     context = {
@@ -152,8 +160,11 @@ def admin_category_update(request, id):
     category_select = ProductCategories.objects.get(id=id)
     if request.method == 'POST':
         form = AdminCategoryUpdateForm(data=request.POST, instance=category_select, files=request.FILES)
-        form.save()
-        return HttpResponseRedirect(reverse('adminapp:admin_categories'))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:admin_categories'))
+        else:
+            print(form.errors)
     else:
         form = AdminCategoryUpdateForm(instance=category_select)
     context = {
