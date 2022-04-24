@@ -1,4 +1,3 @@
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
@@ -9,7 +8,8 @@ from authapp.models import User
 from adminapp.mixin import BaseClassContextMixin, CustomDispatchMixin
 from mainapp.models import Product, ProductCategories
 
-from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
+from django.views.generic import TemplateView, ListView, UpdateView, DetailView, \
+    DeleteView, CreateView
 
 
 # @user_passes_test(lambda u: u.is_superuser)
@@ -100,10 +100,10 @@ class UserUpdateView(UpdateView, BaseClassContextMixin, CustomDispatchMixin):
 
 class UserDeleteView(DeleteView, BaseClassContextMixin, CustomDispatchMixin):
     model = User
-    template_name = 'admins/admin-users-update-delete.html'
+    template_name = 'adminapp/admin-users-update-delete.html'
     form_class = UserAdminProfileForm
     success_url = reverse_lazy('adminapp:admin_users')
-    title = 'Админка | Удалить пользователя'
+
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -113,62 +113,94 @@ class UserDeleteView(DeleteView, BaseClassContextMixin, CustomDispatchMixin):
 
 
 # product
-@user_passes_test(lambda u: u.is_superuser)
-def admin_products(request):
-    context = {
-        'title': 'Админка | Продукты',
-        'products': Product.objects.all()
-     }
-    return render(request, 'adminapp/admin-product-read.html', context)
+
+class ProductListView(ListView, BaseClassContextMixin, CustomDispatchMixin):
+    model = Product
+    template_name = 'adminapp/admin-product-read.html'
+    title: 'Админка | Продукты'
+    context_object_name = 'products'
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin_product_create(request):
-    if request.method == 'POST':
-        form = AdminProductForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:admin_products'))
-        else:
-            print(form.errors)
-
-    else:
-        form = AdminProductForm()
-    context = {
-        'title': 'Админка | Создать продукты',
-        'form': form
-    }
-    return render(request, 'adminapp/admin-product-create.html', context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def admin_products(request):
+#     context = {
+#         'title': 'Админка | Продукты',
+#         'products': Product.objects.all()
+#      }
+#     return render(request, 'adminapp/admin-product-read.html', context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin_product_update(request, id):
-    product_select = Product.objects.get(id=id)
-    if request.method == 'POST':
-        form = AdminProductUpdateForm(data=request.POST, instance=product_select,
-                                          files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:admin_products'))
-        else:
-            print(form.errors)
-    else:
-        form = AdminProductUpdateForm(instance=product_select)
-    context = {
-        'title': 'Админка | Обновление продуктов',
-        'form': form,
-        'product_select': product_select
-    }
-    return render(request, 'adminapp/admin-product-update-delete.html', context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def admin_product_create(request):
+#     if request.method == 'POST':
+#         form = AdminProductForm(data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('adminapp:admin_products'))
+#         else:
+#             print(form.errors)
+#
+#     else:
+#         form = AdminProductForm()
+#     context = {
+#         'title': 'Админка | Создать продукты',
+#         'form': form
+#     }
+#     return render(request, 'adminapp/admin-product-create.html', context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin_product_delete(request, id):
-    pass
-    product = Product.objects.get(id=id)
-    product.delete()
-    return HttpResponseRedirect(reverse('adminapp:admin_products'))
+class ProductCreateView(CreateView, BaseClassContextMixin, CustomDispatchMixin):
+    model = Product
+    template_name = 'adminapp/admin-product-create.html'
+    form_class = AdminProductForm
+    title: 'Админка | Создать продукты'
+    success_url = reverse_lazy('adminapp:admin_products')
 
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def admin_product_update(request, id):
+#     product_select = Product.objects.get(id=id)
+#     if request.method == 'POST':
+#         form = AdminProductUpdateForm(data=request.POST, instance=product_select,
+#                                           files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('adminapp:admin_products'))
+#         else:
+#             print(form.errors)
+#     else:
+#         form = AdminProductUpdateForm(instance=product_select)
+#     context = {
+#         'title': 'Админка | Обновление продуктов',
+#         'form': form,
+#         'product_select': product_select
+#     }
+#     return render(request, 'adminapp/admin-product-update-delete.html', context)
+
+class ProductUpdateView(UpdateView, BaseClassContextMixin, CustomDispatchMixin):
+    model = Product
+    template_name = 'adminapp/admin-product-update-delete.html'
+    form_class = AdminProductUpdateForm
+    title: 'Админка | Обновление продуктов'
+    success_url = reverse_lazy('adminapp:admin_products')
+
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def admin_product_delete(request, id):
+#     product = Product.objects.get(id=id)
+#     product.delete()
+#     return HttpResponseRedirect(reverse('adminapp:admin_products'))
+
+class ProductDeleteView(DeleteView, BaseClassContextMixin, CustomDispatchMixin):
+    model = Product
+    template_name = 'adminapp/admin-product-update-delete.html'
+    form_class = AdminProductUpdateForm
+    success_url = reverse_lazy('adminapp:admin_products')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
 
 # category
 @user_passes_test(lambda u: u.is_superuser)
@@ -176,7 +208,7 @@ def admin_categories(request):
     context = {
         'title': 'Админка | Категории',
         'categories': ProductCategories.objects.all()
-     }
+    }
     return render(request, 'adminapp/admin-category-read.html', context)
 
 
@@ -202,7 +234,8 @@ def admin_category_create(request):
 def admin_category_update(request, id):
     category_select = ProductCategories.objects.get(id=id)
     if request.method == 'POST':
-        form = AdminCategoryUpdateForm(data=request.POST, instance=category_select, files=request.FILES)
+        form = AdminCategoryUpdateForm(data=request.POST, instance=category_select,
+                                       files=request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('adminapp:admin_categories'))
