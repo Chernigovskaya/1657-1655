@@ -139,6 +139,12 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
     success_url = reverse_lazy('authapp:profile')
     title = 'Geekshop | Профиль'
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(ProfileFormView, self).get_context_data()
+    #     context['baskets'] = Basket.objects.filter(user=self.request.user)
+    #     return context
+
+
     def form_valid(self, form):
         messages.set_level(self.request, messages.SUCCESS)
         messages.success(self.request, 'Вы успешно сохранили данные')
