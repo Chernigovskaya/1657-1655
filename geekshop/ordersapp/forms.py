@@ -19,7 +19,8 @@ class OrderItemsForm(forms.ModelForm):
 
     class Meta:
         model = OrderItem
-        fields = '__all__'
+        exclude = ()
+
     def __init__(self, *args, **kwargs):
         super(OrderItemsForm, self).__init__(*args, **kwargs)
         for filed_name, field in self.fields.items():

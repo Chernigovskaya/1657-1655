@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             {% for item in object_list %}
-                {% if item.is_active %}
+                {% if item.is_activ %}
                     <tr>
                         <td class="td1 orders_list">{{ item.pk }}</td>
                         <td>{{ item.created|date:"Y-m-d H:i:s" }}</td>
