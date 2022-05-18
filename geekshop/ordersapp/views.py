@@ -65,7 +65,7 @@ class OrderCreate(CreateView, BaseClassContextMixin):
 
 
 class OrderUpdate(UpdateView, BaseClassContextMixin):
-
+    pass
 
 
 class OrderRead(DetailView, BaseClassContextMixin):
