@@ -1,0 +1,7 @@
+asgiref==3.5.0
+Django==3.2.12
+listview==0.1.0
+Pillow==9.0.1
+python-dotenv==0.20.0
+pytz==2022.1
+sqlparse==0.4.2

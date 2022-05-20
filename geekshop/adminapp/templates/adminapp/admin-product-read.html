@@ -1,0 +1,60 @@
+{% extends 'adminapp/base.html' %}
+
+{% block context %}
+  <div class="container-fluid">
+  <h1 class="mt-4">Продукты</h1>
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-table mr-1"></i>
+      Продукты
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>Наименование</th>
+            <th>Фото</th>
+            <th>Описание</th>
+            <th>Стоимость</th>
+            <th>Количество</th>
+            <th>категория</th>
+
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <th>Наименование</th>
+            <th>Фото</th>
+            <th>Описание</th>
+            <th>Стоимость</th>
+            <th>Количество</th>
+            <th>категория</th>
+          </tr>
+          </tfoot>
+          <tbody>
+
+          {% for product in products %}
+          <tr>
+            <td><a href="{% url 'adminapp:admin_product_update' product.id %}" style="color: dodgerblue">{{ product.name }}</a></td>
+
+            <td>{{ product.image }}</td>
+            <td>{{ product.descriptions }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.category }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a href="{% url 'adminapp:admin_product_create' %}">
+        <button class="btn btn-success">Создать товар</button>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
