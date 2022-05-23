@@ -1,4 +1,5 @@
 from authapp.forms import forms
+from mainapp.models import Product
 from ordersapp.models import Order, OrderItem
 
 
@@ -25,3 +26,5 @@ class OrderItemsForm(forms.ModelForm):
         super(OrderItemsForm, self).__init__(*args, **kwargs)
         for filed_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+
