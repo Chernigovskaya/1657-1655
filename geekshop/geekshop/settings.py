@@ -94,7 +94,7 @@ if SERVER:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'geekshop',
+            'NAME': 'geeksho',
             'USER': 'postgres',
         }
     }
