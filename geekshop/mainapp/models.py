@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 # ''' model category '''
+
 class ProductCategories(models.Model):
     name = models.CharField(max_length=64, unique=True)
     descriptions = models.TextField(blank=True, null=True)
@@ -12,6 +13,8 @@ class ProductCategories(models.Model):
 
 
 '''model for product'''
+
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='product_images', blank=True)
@@ -22,3 +25,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.category}'
+
+
+
+
