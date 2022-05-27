@@ -29,11 +29,11 @@ class Basket(models.Model):
         return self.quantity * self.product.price
 
     def total_sum(self):
-        baskets = Basket.objects.filter(user=self.user)
+        baskets = Basket.objects.filter(user=self.user).select_related()
         return sum(basket.sum() for basket in baskets)
 
     def total_quantity(self):
-        baskets = Basket.objects.filter(user=self.user)
+        baskets = Basket.objects.filter(user=self.user).select_related()
         return sum(basket.quantity for basket in baskets)
 
     # def save(self, *args, **kwargs):

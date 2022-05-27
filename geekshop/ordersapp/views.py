@@ -32,7 +32,7 @@ class OrderCreate(CreateView, BaseClassContextMixin):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            basket_item = Basket.objects.filter(user=self.request.user)
+            basket_item = Basket.objects.filter(user=self.request.user).select_related()
             if basket_item:
                 OrderFormSet = inlineformset_factory(Order, OrderItem,
                                                      form=OrderItemsForm,
@@ -42,7 +42,7 @@ class OrderCreate(CreateView, BaseClassContextMixin):
                     form.initial['product'] = basket_item[num].product
                     form.initial['quantity'] = basket_item[num].quantity
                     form.initial['price'] = basket_item[num].product.price
-                basket_item.delete()
+                basket_item.delete().select_related()
             else:
                 formset = OrderFormSet()
 
@@ -55,12 +55,12 @@ class OrderCreate(CreateView, BaseClassContextMixin):
 
         with transaction.atomic():
             form.instance.user = self.request.user
-            self.object = form.save()
+            self.object = form.save().select_related()
             if orderitems.is_valid():
                 orderitems.instance = self.object
-                orderitems.save()
+                orderitems.save().select_related()
         if self.object.get_total_cost() == 0:
-            self.object.delete()
+            self.object.delete().select_related()
         return super(OrderCreate, self).form_valid(form)
 
 
@@ -94,7 +94,7 @@ class OrderUpdate(UpdateView, BaseClassContextMixin):
 
             if orderitems.is_valid():
                 orderitems.instance = self.object
-                orderitems.save()
+                orderitems.save().select_related()
 
             if self.object.get_total_cost() == 0:
                 self.object.delete()
@@ -115,13 +115,13 @@ class OrderDelete(DeleteView, BaseClassContextMixin):
 def order_forming_complete(request, pk):
     order = Order.objects.get(pk=pk)
     order.status = Order.SEND_TO_PROCESSED
-    order.save()
+    order.save().select_related()
     return HttpResponseRedirect(reverse('orders:list'))
 
 
 def get_product_price(request, pk):
     if request.is_ajax():
-        product = Product.objects.get(pk=pk)
+        product = Product.objects.get(pk=pk).select_related()
         if product:
             return JsonResponse({'price': product.price})
         else:
@@ -132,16 +132,16 @@ def get_product_price(request, pk):
 @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, instance, **kwargs):
     if instance.pk:
-        item = instance.get_item(int(instance.pk))
+        item = instance.get_item(int(instance.pk)).select_related()
         instance.product.quantity -= instance.quantity - item
     else:
         instance.product.quantity -= instance.quantity
-    instance.product.save()
+    instance.product.save().select_related()
 
 
 @receiver(pre_delete, sender=OrderItem)
 @receiver(pre_delete, sender=Basket)
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
-    instance.product.save()
+    instance.product.save().select_related()
 

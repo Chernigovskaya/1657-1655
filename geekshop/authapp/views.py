@@ -53,7 +53,7 @@ class RegisterView(FormView, BaseClassContextMixin):
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save().select_related()
             if self.send_verify_link(user):
                 messages.set_level(self.request, messages.SUCCESS)
                 messages.success(request, 'Вы успешно зарегистрировались')
@@ -149,7 +149,7 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
         profile_form = UserProfileEditForm(data=request.POST, files=request.FILES,
                                            instance=request.user.userprofile)
         if form.is_valid() and profile_form.is_valid():
-            form.save()
+            form.save().select_related()
         return redirect(self.success_url)
 
     def get_context_data(self, **kwargs):
