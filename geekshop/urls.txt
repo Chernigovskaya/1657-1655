@@ -1,4 +1,22 @@
-http://194.58.102.110/authapp/login/ POST username=Maria&password=1
+http://194.58.102.110
+http://194.58.102.110/products/category/1/
+http://194.58.102.110/products/category/2/
+http://194.58.102.110/products/category/3/
+http://194.58.102.110/products/category/4/
+http://194.58.102.110/products/category/5/
 http://194.58.102.110/authapp/profile/
+http://194.58.102.110/orders/
+http://194.58.102.110/orders/read/2/
+http://194.58.102.110/orders/update/2/
+http://194.58.102.110/orders/delete/2/
+http://194.58.102.110/authapp/logout/
+http://194.58.102.110/authapp/login/
+http://194.58.102.110/admins/
+http://194.58.102.110/admins/users/
+http://194.58.102.110/admins/categories/
+http://194.58.102.110/admins/category_update/3/
+http://194.58.102.110/admins/products/
+http://194.58.102.110/admins/product_update/3/
+http://194.58.102.110/admins/category_create/
 
 
