@@ -16,11 +16,11 @@ def basket_add(request, id):
     baskets = Basket.objects.filter(user=user_select, product=product)
 
     if baskets:
-        basket = baskets.first()
+        basket = baskets.first().select_related()
         basket.quantity += 1
         basket.save()
     else:
-        Basket.objects.create(user=user_select, product=product, quantity=1)
+        Basket.objects.create(user=user_select, product=product, quantity=1).select_related()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -61,7 +61,7 @@ def basket_edit(request, basket_id, quantity):
         else:
             basket.delete()
 
-        baskets = Basket.objects.filter(user=request.user)
+        baskets = Basket.objects.filter(user=request.user).select_related()
         contex = {'baskets': baskets}
 
         result = render_to_string('basketapp/basket.html', contex)

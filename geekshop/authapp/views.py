@@ -149,7 +149,7 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
         profile_form = UserProfileEditForm(data=request.POST, files=request.FILES,
                                            instance=request.user.userprofile)
         if form.is_valid() and profile_form.is_valid():
-            form.save().select_related()
+            form.save()
         return redirect(self.success_url)
 
     def get_context_data(self, **kwargs):
