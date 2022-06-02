@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_extensions'
 ]
 
+
 MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
