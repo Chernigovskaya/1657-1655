@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 output_field=DecimalField(),
             )).order_by('action_order', 'total_price').select_related()
 
-        t_list = PrettyTable(['Заказ', 'Товар', "Скидка", "Раздница времени", ])
+        t_list = PrettyTable(['Заказ', 'Товар', "Скидка", "Разница времени", ])
 
         for orderitem in test_data:
             t_list.add_row([f'{orderitem.action_order} заказ №{orderitem.pk}',
