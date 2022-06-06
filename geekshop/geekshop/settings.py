@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-SERVER = False
+SERVER = True
 if SERVER:
     DATABASES = {
         'default': {
@@ -241,8 +241,8 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        # 'LOCATION': '194.58.102.110:11211',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': '194.58.102.110:11211',
+        # 'LOCATION': '127.0.0.1:11211',
         }
     }
 LOW_CACHE = True
