@@ -53,7 +53,7 @@ class RegisterView(FormView, BaseClassContextMixin):
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            user = form.save().select_related()
+            user = form.save()
             if self.send_verify_link(user):
                 messages.set_level(self.request, messages.SUCCESS)
                 messages.success(request, 'Вы успешно зарегистрировались')
